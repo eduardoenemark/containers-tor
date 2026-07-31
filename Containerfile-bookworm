@@ -3,7 +3,7 @@ FROM docker.io/debian:bookworm-20240812-slim
 LABEL org.opencontainers.image.ref.name=tor
 LABEL org.opencontainers.image.version=1.0-bookworm-20240812
 LABEL org.opencontainers.image.authors=eduardoenemark
-LABEL org.opencontainers.image.source=github.com/eduardoenemark/containers/tor
+LABEL org.opencontainers.image.source=github.com/eduardoenemark/containers-tor
 LABEL org.opencontainers.image.title="TOR installation on Debian Bookworm version"
 
 RUN apt update && \
