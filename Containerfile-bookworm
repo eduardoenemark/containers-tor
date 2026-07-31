@@ -1,0 +1,24 @@
+FROM docker.io/debian:bookworm-20240812-slim
+
+LABEL org.opencontainers.image.ref.name=tor
+LABEL org.opencontainers.image.version=1.0-bookworm-20240812
+LABEL org.opencontainers.image.authors=eduardoenemark
+LABEL org.opencontainers.image.source=github.com/eduardoenemark/containers/tor
+LABEL org.opencontainers.image.title="TOR installation on Debian Bookworm version"
+
+RUN apt update && \
+    apt install -y ca-certificates apt-transport-https wget gpg && \
+    echo "deb http://deb.debian.org/debian bookworm main" > /etc/apt/sources.list.d/debian-bookworm.list && \
+    echo "deb [signed-by=/usr/share/keyrings/deb.torproject.org-keyring.gpg] https://deb.torproject.org/torproject.org bookworm main" >> /etc/apt/sources.list.d/tor.list && \
+    echo "deb-src [signed-by=/usr/share/keyrings/deb.torproject.org-keyring.gpg] https://deb.torproject.org/torproject.org bookworm main" >> /etc/apt/sources.list.d/tor.list && \
+    wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor | tee /usr/share/keyrings/deb.torproject.org-keyring.gpg > /dev/null && \
+    apt update && \
+    apt install -y tor deb.torproject.org-keyring  && \
+    apt remove -y wget && \
+    apt autoremove -y && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* /var/cache/* /var/log/*
+
+VOLUME ["/etc/tor","/var/log/tor","/var/lib/tor"]
+EXPOSE 9050/tcp
+CMD [ "tor" ]
