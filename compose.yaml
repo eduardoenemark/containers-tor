@@ -1,0 +1,21 @@
+# Example compose file for the tor container (podman-compose / docker-compose)
+version: '3.8'
+services:
+  tor:
+    # image built locally by ./build.sh (tag parsed from Containerfile labels)
+    image: localhost/tor:1.1
+    # published alternative: docker.io/eduardoenemark/tor:1.0-bookworm-20240812
+    container_name: tor
+    restart: always
+    stop_grace_period: 5s
+    ports:
+      # Tor SOCKS5 proxy port
+      - "0.0.0.0:9050:9050/tcp"
+    volumes:
+      - "~/.cache/log/tor:/var/log/tor"
+      - "~/.cache/data/tor:/var/lib/tor"
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 256m
