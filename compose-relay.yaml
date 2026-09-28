@@ -5,8 +5,15 @@ services:
     container_name: tor
     restart: always
     stop_grace_period: 5s
+    environment:
+      - TOR_RELAY=1
+      - TOR_NICKNAME=kalitor
+      - TOR_BANDWIDTH_RATE=5242880
+      - TOR_BANDWIDTH_BURST=10485760
     ports:
       - "0.0.0.0:9050:9050/tcp"
+      - "0.0.0.0:9001:9001/tcp"
+      - "0.0.0.0:9030:9030/tcp"
     volumes:
       - "~/.cache/log/tor:/var/log/tor"
       - "~/.cache/data/tor:/var/lib/tor"
