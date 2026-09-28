@@ -20,7 +20,7 @@ podman run --name tor --restart always --stop-timeout 5 \
   --publish 0.0.0.0:9050:9050/tcp \
   --volume ~/.cache/log/tor:/var/log/tor \
   --volume ~/.cache/data/tor:/var/lib/tor \
-  --cpus 1 --memory 256m localhost/tor:1.2
+  --cpus 1 --memory 256m localhost/tor:1.1
 ```
 
 ## Relay mode
